@@ -1,13 +1,17 @@
-import type { Config } from "tailwindcss";
+import type {Config} from "tailwindcss";
+import {nextui} from "@nextui-org/theme";
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  theme: {},
-  plugins: [],
-  darkMode: 'class'
+    content: [
+        "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+        "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+        "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+        "./src/views/**/*.{js,ts,jsx,tsx}",
+        "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+        "./node_modules/@nextui-org/theme/dist/components/button.js",
+    ],
+    theme: {},
+    plugins: [nextui()],
+    darkMode: 'class'
 };
 export default config;
