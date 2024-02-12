@@ -1,7 +1,7 @@
 import Countdown, {CountdownApi, zeroPad} from "react-countdown";
 import {Button} from "@nextui-org/button";
 import SessionHelper from "@/helpers/SessionHelper";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import {useAppDispatch, useAppSelector} from '@/hooks/states';
 import {increaseCycleNumber, switchToNextSession} from "@/states/timer";
 import useSound from 'use-sound';
@@ -14,19 +14,18 @@ const Timer: React.FC = () => {
 
     const [sessionDuration, setSessionDuration] = useState<number>(SessionHelper.getDuration(timerSession.name));
     const [countdownApi, setCountdownApi] = useState<CountdownApi | null>(null);
-    const [playClockTicking, {stop, isPlaying}] = useSound('/sounds/clock_ticking.mp3', {
+    const [playClockTicking, {stop}] = useSound('/sounds/clock_ticking.mp3', {
         loop: true,
+        volume: 0.5,
     });
 
     // methods
     const isPaused = () => countdownApi && (countdownApi.isPaused() || countdownApi.isStopped());
-    const stopClockTicking = () => stop();
+    const stopClockTicking = useCallback(() => stop(), [stop]);
 
     const toggleTimer = () => {
         if (isPaused()) {
-            if (!isPlaying) {
-                playClockTicking();
-            }
+            playClockTicking();
 
             countdownApi?.start();
         } else {
@@ -57,7 +56,7 @@ const Timer: React.FC = () => {
 
         // stop the clock ticking sound effect on session change
         stopClockTicking();
-    }, [timerSession, countdownApi]);
+    }, [timerSession, countdownApi, stopClockTicking]);
     return (
         <>
             <Countdown
