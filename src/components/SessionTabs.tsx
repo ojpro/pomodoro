@@ -1,17 +1,25 @@
-import {Tab, Tabs}          from "@nextui-org/tabs";
-import SessionHelper        from "@/helpers/SessionHelper";
-import React                            from "react";
+import {Tab, Tabs} from "@nextui-org/tabs";
+import SessionHelper from "@/helpers/SessionHelper";
+import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "@/hooks/states";
-import {changeTimerSession}             from "@/states/timer";
+import {changeTimerSession} from "@/states/timer";
+import useSound from 'use-sound';
 
 export default function SessionTabs() {
     //states
     const timerSession = useAppSelector(state => state.timer.value);
     const dispatch = useAppDispatch();
+    const [playSwitchSound] = useSound('/sounds/button_click.mp3')
 
+    // methods
     const handleSessionChange = (sessionType: React.Key) => {
         dispatch(changeTimerSession(sessionType.toString()));
     };
+
+    // watchers
+    useEffect(() => {
+        playSwitchSound();
+    }, [playSwitchSound, timerSession]);
 
     return (
         <div className="flex flex-wrap gap-4 py-6">
