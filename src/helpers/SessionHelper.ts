@@ -1,4 +1,8 @@
 export default class SessionHelper {
+    static readonly POMODORO = 'pomodoro';
+    static readonly SHORT_BREAK = 'short-break';
+    static readonly LONG_BREAK = 'long-break';
+
     private static sessionTypes: Record<string, { name: string, duration: number }> = {
         'pomodoro': {name: 'Pomodoro', duration: 25},
         'short-break': {name: 'Short Break', duration: 5},
