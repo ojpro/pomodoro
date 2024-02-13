@@ -2,7 +2,7 @@
 
 import {NextUIProvider}                                                  from "@nextui-org/system";
 import SessionTabs                                                       from "@/components/SessionTabs";
-import Timer                                                             from "@/components/Timer";
+import CountdownTimer                                                             from "@/components/CountdownTimer";
 export default function MainView() {
 
     return (<>
@@ -15,7 +15,7 @@ export default function MainView() {
                 </header>
 
                 <div className="relative text-center h-[60vh]">
-                    <Timer/>
+                    <CountdownTimer/>
                 </div>
             </main>
         </NextUIProvider>
