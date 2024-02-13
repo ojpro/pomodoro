@@ -47,7 +47,7 @@ export const timerSlice = createSlice({
         },
 
         switchToNextSession: state => {
-            // check to which session should switch next
+            // check to which session should switch to next
             if (state.value.name === SessionHelper.POMODORO) {
                 if (state.value.cycleNumber < 4) {
                     state.value.name = SessionHelper.SHORT_BREAK;

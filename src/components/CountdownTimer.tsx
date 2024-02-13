@@ -5,14 +5,21 @@ import React, {useEffect, useState, useCallback} from "react";
 import {useAppDispatch, useAppSelector} from '@/hooks/states';
 import {increaseCycleNumber, switchToNextSession} from "@/states/timer";
 import useSound from 'use-sound';
+import useNotification from "@/hooks/notification";
 
+interface NotificationProps {
+    title: string,
+    description: string
+}
 
 const Timer: React.FC = () => {
     //states
     const timerSession = useAppSelector(state => state.timer.value);
     const dispatch = useAppDispatch();
-
+    const {showNotification} = useNotification();
     const [sessionDuration, setSessionDuration] = useState<number>(SessionHelper.getDuration(timerSession.name));
+    const [notificationDetails, setNotificationDetails] = useState<NotificationProps>(SessionHelper.getNotificationInfo(timerSession.name));
+    const [isCompleted, setIsCompleted] = useState<boolean>(false);
     const [countdownApi, setCountdownApi] = useState<CountdownApi | null>(null);
     const [playClockTicking, {stop}] = useSound('/sounds/clock_ticking.mp3', {
         loop: true,
@@ -36,12 +43,17 @@ const Timer: React.FC = () => {
     };
 
     const handleCompletion = () => {
-
+        // stop the clock ticking
         stopClockTicking();
 
+        // increase the pomodoro cycle number
         dispatch(increaseCycleNumber());
 
+        // switch to the next session
         dispatch(switchToNextSession());
+
+        // set completation state
+        setIsCompleted(true);
     }
 
     // watcher
@@ -56,7 +68,25 @@ const Timer: React.FC = () => {
 
         // stop the clock ticking sound effect on session change
         stopClockTicking();
-    }, [timerSession, countdownApi, stopClockTicking]);
+
+
+        if (isCompleted) {
+            // change notification details
+            setNotificationDetails(SessionHelper.getNotificationInfo(timerSession.name));
+        }
+    }, [timerSession, countdownApi, stopClockTicking, isCompleted]);
+
+    // TODO: fix the nighmare issue
+    useEffect(() => {
+        if(isCompleted){
+            showNotification(notificationDetails.title, {
+                body: notificationDetails.description
+            });
+
+            setIsCompleted(false);
+        }
+    }, [isCompleted, notificationDetails, showNotification]);
+
     return (
         <>
             <Countdown
