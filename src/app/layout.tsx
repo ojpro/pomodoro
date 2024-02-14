@@ -1,8 +1,8 @@
-import React           from "react";
-import type {Metadata} from "next";
+import type { Metadata } from "next";
+import React from "react";
 
+import StoreProvider from "@/helpers/StoreProvider";
 import "./globals.css";
-import StoreProvider   from "@/helpers/StoreProvider";
 
 export const metadata: Metadata = {
     title: "Pomodoro App",

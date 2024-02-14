@@ -16,21 +16,20 @@
     "@nextui-org/theme": "^2.1.17",
     "@nextui-org/tooltip": "^2.0.29",
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-select": "^2.0.0",
     "@reduxjs/toolkit": "^2.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
     "framer-motion": "^11.0.3",
+    "lucide-react": "^0.330.0",
     "next": "14.1.0",
     "react": "^18",
     "react-countdown": "^2.3.5",
-    "lucide-react": "^0.330.0",
     "react-dom": "^18",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
     "react-redux": "^9.1.0",
     "use-sound": "^4.0.1"
   },
   "devDependencies": {
-    "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -39,7 +38,9 @@
     "eslint-config-next": "14.1.0",
     "lucide-react": "^0.330.0",
     "postcss": "^8",
+    "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
   }
 }

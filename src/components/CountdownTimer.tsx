@@ -1,11 +1,11 @@
-import Countdown, {CountdownApi, zeroPad} from "react-countdown";
-import {Button} from "@nextui-org/button";
 import SessionHelper from "@/helpers/SessionHelper";
-import React, {useEffect, useState, useCallback} from "react";
-import {useAppDispatch, useAppSelector} from '@/hooks/states';
-import {increaseCycleNumber, switchToNextSession} from "@/states/timer";
-import useSound from 'use-sound';
 import useNotification from "@/hooks/notification";
+import { useAppDispatch, useAppSelector } from '@/hooks/states';
+import { increaseCycleNumber, switchToNextSession } from "@/states/timer";
+import { Button } from "@nextui-org/button";
+import React, { useCallback, useEffect, useState } from "react";
+import Countdown, { CountdownApi, zeroPad } from "react-countdown";
+import useSound from 'use-sound';
 
 interface NotificationProps {
     title: string,
@@ -97,7 +97,7 @@ const Timer: React.FC = () => {
                 renderer={(props) => (
                     <Button color="default" variant="light"
                             onClick={() => toggleTimer()}
-                            className='text-white dark:text-gray-900 w-fit h-fit font-bold text-9xl text-[10rem] absolute top-1/2 -translate-y-1/2 -translate-x-1/2'>
+                            className='text-white dark:text-gray-300 w-fit h-fit font-bold text-9xl text-[10rem] absolute top-1/2 -translate-y-1/2 -translate-x-1/2'>
                         {zeroPad(props.minutes)} : {zeroPad(props.seconds)}
                     </Button>)}
             />
