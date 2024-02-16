@@ -1,6 +1,5 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import type {RootState}             from "@/states/store";
-import SessionHelper                from "@/helpers/SessionHelper";
+import SessionHelper from "@/helpers/SessionHelper";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Define a type for the slice state
 export interface TimerState {
@@ -62,8 +61,5 @@ export const timerSlice = createSlice({
 })
 
 export const {changeTimerSession, increaseCycleNumber, switchToNextSession} = timerSlice.actions
-
-// Other code such as selectors can use the imported `RootState` type
-export const selectTimer = (state: RootState) => state.timer
 
 export default timerSlice.reducer

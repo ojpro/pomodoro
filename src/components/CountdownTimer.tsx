@@ -1,9 +1,11 @@
 import SessionHelper from "@/helpers/SessionHelper";
 import useNotification from "@/hooks/notification";
 import { useAppDispatch, useAppSelector } from '@/hooks/states';
+import { getSettingsByIds } from "@/lib/utils";
 import { increaseCycleNumber, switchToNextSession } from "@/states/timer";
+import { SettingsChild } from "@/types/settings";
 import { Button } from "@nextui-org/button";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Countdown, { CountdownApi, zeroPad } from "react-countdown";
 import useSound from 'use-sound';
 
@@ -12,16 +14,17 @@ interface NotificationProps {
     description: string
 }
 
-const Timer: React.FC = () => {
+export default function CountdownTimer() {
     //states
     const timerSession = useAppSelector(state => state.timer.value);
+    const settings = useAppSelector(state => state.settings);
     const dispatch = useAppDispatch();
-    const {showNotification} = useNotification();
+    const { showNotification } = useNotification();
     const [sessionDuration, setSessionDuration] = useState<number>(SessionHelper.getDuration(timerSession.name));
     const [notificationDetails, setNotificationDetails] = useState<NotificationProps>(SessionHelper.getNotificationInfo(timerSession.name));
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
     const [countdownApi, setCountdownApi] = useState<CountdownApi | null>(null);
-    const [playClockTicking, {stop}] = useSound('/sounds/clock_ticking.mp3', {
+    const [playClockTicking, { stop }] = useSound('/sounds/clock_ticking.mp3', {
         loop: true,
         volume: 0.5,
     });
@@ -52,7 +55,7 @@ const Timer: React.FC = () => {
         // switch to the next session
         dispatch(switchToNextSession());
 
-        // set completation state
+        // set completion state
         setIsCompleted(true);
     }
 
@@ -78,10 +81,15 @@ const Timer: React.FC = () => {
     }, [timerSession, countdownApi, stopClockTicking]);
 
     useEffect(() => {
-        if(isCompleted){
-            showNotification(notificationDetails.title, {
-                body: notificationDetails.description
-            });
+        if (isCompleted) {
+            const notificationSettings: SettingsChild | undefined = getSettingsByIds(settings, 'General', 'Notifications');
+
+            // show notification only when they are enabled
+            if (notificationSettings?.options[0].value == true) {
+                showNotification(notificationDetails.title, {
+                    body: notificationDetails.description
+                });
+            }
 
             setIsCompleted(false);
         }
@@ -96,8 +104,8 @@ const Timer: React.FC = () => {
                 onComplete={handleCompletion}
                 renderer={(props) => (
                     <Button color="default" variant="light"
-                            onClick={() => toggleTimer()}
-                            className='text-white dark:text-gray-300 w-fit h-fit font-bold text-9xl text-[10rem] absolute top-1/2 -translate-y-1/2 -translate-x-1/2'>
+                        onClick={() => toggleTimer()}
+                        className='text-white dark:text-gray-300 w-fit h-fit font-bold text-9xl text-[10rem] absolute top-1/2 -translate-y-1/2 -translate-x-1/2'>
                         {zeroPad(props.minutes)} : {zeroPad(props.seconds)}
                     </Button>)}
             />
@@ -105,5 +113,3 @@ const Timer: React.FC = () => {
         </>
     );
 }
-
-export default Timer;

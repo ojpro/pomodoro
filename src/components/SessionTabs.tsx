@@ -1,8 +1,8 @@
-import {Tab, Tabs} from "@nextui-org/tabs";
 import SessionHelper from "@/helpers/SessionHelper";
-import React, {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "@/hooks/states";
-import {changeTimerSession} from "@/states/timer";
+import { useAppDispatch, useAppSelector } from "@/hooks/states";
+import { changeTimerSession } from "@/states/timer";
+import { Tab, Tabs } from "@nextui-org/tabs";
+import React, { useEffect } from "react";
 import useSound from 'use-sound';
 
 export default function SessionTabs() {

@@ -1,8 +1,5 @@
 "use client";
 
-import {NextUIProvider}                                                  from "@nextui-org/system";
-import SessionTabs                                                       from "@/components/SessionTabs";
-import CountdownTimer                                                             from "@/components/CountdownTimer";
 import CountdownTimer from "@/components/CountdownTimer";
 import SessionTabs from "@/components/SessionTabs";
 import { toggleFullScreen } from "@/lib/utils";
@@ -11,6 +8,7 @@ import { NextUIProvider } from "@nextui-org/system";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Bolt, Fullscreen } from 'lucide-react';
 import { useState } from "react";
+import PreferencesView from "./PreferencesView";
 
 export default function MainView() {
     const [isPreferencesModalOpen, setIsPreferencesModalOpen] = useState(false);
@@ -50,6 +48,9 @@ export default function MainView() {
                 </footer>
 
                 {/* Components */}
+
+                {/* Preferences */}
+                <PreferencesView isOpen={isPreferencesModalOpen} handleChange={setIsPreferencesModalOpen} />
 
             </main>
         </NextUIProvider>
