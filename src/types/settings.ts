@@ -17,10 +17,6 @@ export interface SettingsState {
     children?: SettingsChild[]
 }
 
-export interface PreferencesViewProps {
-    isOpen: boolean,
-    handleChange: (isOpen: boolean) => void;
-}
 export interface CategoryChildOptionUI {
     name: string,
     label: string,
@@ -39,4 +35,10 @@ export interface CategoryUI {
     name: string;
     icon: LucideIcon,
     children?: CategoryChildUI[],
+}
+
+// Define the type of initialState
+export interface InitialState {
+    isPreferencesModalOpen: boolean,
+    value: SettingsState[];
 }

@@ -1,4 +1,4 @@
-import { CategoryUI, SettingsChild } from "@/types/settings";
+import { CategoryChildOption, SettingsChild } from "@/types/settings";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -14,8 +14,9 @@ export function toggleFullScreen(): void {
     }
 }
 
-export const getSettingsByIds = (settings: any, categoryName: string, childName: string) => {
+export const getSettingsByIds = (settings: any, categoryName: string, childName: string): SettingsChild | undefined => {
     return settings
-        .find((category: CategoryUI) => category.name === categoryName)?.children
-        ?.find((child: SettingsChild) => child.name === childName);
+        .find((category: SettingsChild) => category.name === categoryName)
+        ?.children
+        ?.find((child: CategoryChildOption) => child.name === childName) as SettingsChild | undefined;
 };

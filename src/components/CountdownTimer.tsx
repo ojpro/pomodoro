@@ -3,7 +3,7 @@ import useNotification from "@/hooks/notification";
 import { useAppDispatch, useAppSelector } from '@/hooks/states';
 import { getSettingsByIds } from "@/lib/utils";
 import { increaseCycleNumber, switchToNextSession } from "@/states/timer";
-import { SettingsChild } from "@/types/settings";
+import { SettingsChild, SettingsState } from "@/types/settings";
 import { Button } from "@nextui-org/button";
 import { useCallback, useEffect, useState } from "react";
 import Countdown, { CountdownApi, zeroPad } from "react-countdown";
@@ -17,7 +17,7 @@ interface NotificationProps {
 export default function CountdownTimer() {
     //states
     const timerSession = useAppSelector(state => state.timer.value);
-    const settings = useAppSelector(state => state.settings);
+    const settings = useAppSelector<SettingsState[]>(state => state.settings.value);
     const dispatch = useAppDispatch();
     const { showNotification } = useNotification();
     const [sessionDuration, setSessionDuration] = useState<number>(SessionHelper.getDuration(timerSession.name));
@@ -73,12 +73,11 @@ export default function CountdownTimer() {
         // stop the clock ticking sound effect on session change
         stopClockTicking();
 
-
         if (isCompleted) {
             // change notification details
             setNotificationDetails(SessionHelper.getNotificationInfo(timerSession.name));
         }
-    }, [timerSession, countdownApi, stopClockTicking]);
+    }, [timerSession, countdownApi, isCompleted, stopClockTicking]);
 
     useEffect(() => {
         if (isCompleted) {
@@ -93,7 +92,7 @@ export default function CountdownTimer() {
 
             setIsCompleted(false);
         }
-    }, [notificationDetails]);
+    }, [notificationDetails, isCompleted, showNotification, settings]);
 
     return (
         <>

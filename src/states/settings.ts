@@ -1,25 +1,44 @@
 import { settingConfigs } from "@/db/settings";
-import { SettingsState } from "@/types/settings";
+import { InitialState, SettingsState } from "@/types/settings";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState: SettingsState[] = settingConfigs;
-const localInitialSettings = window.localStorage.getItem('settings');
-const getInitialSettings = (): SettingsState[] => {
+// get default settings
+const initialState: InitialState = {
+    isPreferencesModalOpen: false,
+    value: settingConfigs
+};
+
+// get localStorage settings
+const localInitialSettings = typeof window !== 'undefined' && window.localStorage ? window.localStorage.getItem('settings') : null;
+
+// define the initial settings to use
+const getInitialSettings = (): InitialState => {
+    // Return local settings if they exist
     if (localInitialSettings !== null) {
-        return JSON.parse(localInitialSettings);
+        // Update state from local
+        initialState.value = JSON.parse(localInitialSettings) as SettingsState[];
+        return initialState;
     } else {
-        localStorage.setItem('settings', JSON.stringify(initialState));
+        // Otherwise, write the default settings to local storage and return them
+        if (typeof window !== 'undefined' && window.localStorage) {
+            localStorage.setItem('settings', JSON.stringify(initialState.value));
+        }
         return initialState;
     }
 }
 
 export const settingsSlice = createSlice({
     name: 'settings',
-    initialState: getInitialSettings,
+    initialState: getInitialSettings(),
     reducers: {
+        // update preferences modal state
+        setIsPreferencesModalOpen: (state, action: PayloadAction<boolean>) => {
+            state.isPreferencesModalOpen = action.payload;
+        },
+        // update specific setting
         updateSetting: (state, action: PayloadAction<{ settingId: number, childId: number, optionName: string, value: string | number | boolean }>) => {
             const { settingId, childId, optionName, value } = action.payload;
-            const setting = state.find(setting => setting.id === settingId);
+            const setting = state.value.find(setting => setting.id === settingId);
             if (setting && setting.children) {
                 const child = setting.children.find(child => child.id === childId);
                 if (child) {
@@ -30,12 +49,12 @@ export const settingsSlice = createSlice({
                 }
             }
 
-            // save changes locally
-            localStorage.setItem('settings', JSON.stringify(state));
+            // Save changes locally
+            localStorage.setItem('settings', JSON.stringify(state.value));
         },
     },
 });
 
-export const { updateSetting } = settingsSlice.actions;
+export const { setIsPreferencesModalOpen, updateSetting } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

@@ -14,23 +14,24 @@ import {
 import { settingsPresentation } from "@/db/settings";
 import { useAppDispatch, useAppSelector } from "@/hooks/states";
 import { getSettingsByIds } from "@/lib/utils";
-import { updateSetting } from "@/states/settings";
-import { CategoryUI, PreferencesViewProps } from "@/types/settings";
+import { setIsPreferencesModalOpen, updateSetting } from "@/states/settings";
+import { CategoryUI } from "@/types/settings";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { Switch } from "@nextui-org/switch";
 import { useState } from 'react';
 
-export default function PreferencesView({ isOpen, handleChange }: PreferencesViewProps) {
+export default function PreferencesView() {
     // states
     const categories: CategoryUI[] = settingsPresentation;
     const [selectedCategory, setSelectedCategory] = useState<CategoryUI>(categories[0]);
-    const settings = useAppSelector(state => state.settings);
+    const settings = useAppSelector(state => state.settings.value);
+    const isPreferencesModalOpen = useAppSelector(state => state.settings.isPreferencesModalOpen);
     const dispatch = useAppDispatch();
 
     return <>
         {/* Preferences Modal */}
-        <Sheet open={isOpen} onOpenChange={handleChange}>
+        <Sheet open={isPreferencesModalOpen} onOpenChange={(value) => dispatch(setIsPreferencesModalOpen(value))}>
             <SheetContent className="lg:max-w-2xl rounded-l dark:bg-zinc-900 border-l-zinc-800" role="dialog">
                 <SheetHeader>
                     <SheetTitle>Preferences</SheetTitle>
@@ -42,17 +43,16 @@ export default function PreferencesView({ isOpen, handleChange }: PreferencesVie
                         {/* Side Navigation Categories */}
                         <nav className="flex flex-col gap-2">
                             {categories.map(category => (
-                                <>
-                                    <Button
-                                        key={category.id}
-                                        variant={selectedCategory.id == category.id ? 'solid' : 'light'}
-                                        onClick={() => setSelectedCategory(category)}
-                                        className={`flex flex-row justify-start align-middle gap-3 px-6 py-2 rounded-lg`}
-                                    >
-                                        <category.icon />
-                                        <span>{category.name}</span>
-                                    </Button>
-                                </>
+
+                                <Button
+                                    key={category.id}
+                                    variant={selectedCategory.id == category.id ? 'solid' : 'light'}
+                                    onClick={() => setSelectedCategory(category)}
+                                    className={`flex flex-row justify-start align-middle gap-3 px-6 py-2 rounded-lg`}
+                                >
+                                    <category.icon />
+                                    <span>{category.name}</span>
+                                </Button>
                             ))}
                         </nav>
                     </div>
@@ -67,7 +67,7 @@ export default function PreferencesView({ isOpen, handleChange }: PreferencesVie
                             {selectedCategory.children?.map(child => {
                                 const currentSetting = getSettingsByIds(settings, selectedCategory.name, child.name);
                                 return (
-                                    <li key={child.name} className="py-2">
+                                    <li key={currentSetting?.id} className="py-2">
                                         <label className="flex items-center">
                                             {!child.hideName && child.name}
                                             {child.type == 'switch' && (
@@ -86,7 +86,7 @@ export default function PreferencesView({ isOpen, handleChange }: PreferencesVie
                                                     </SelectTrigger>
                                                     <SelectContent className="dark:bg-zinc-900">
                                                         {child.options?.map(option => (
-                                                            <SelectItem value={option.name}>{option.label}</SelectItem>
+                                                            <SelectItem key={option.name} value={option.name}>{option.label}</SelectItem>
                                                         ))}
                                                     </SelectContent>
                                                 </Select>

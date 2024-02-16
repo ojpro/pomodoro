@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     description: "Made for people that what experience best experience",
 };
 
-export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
+export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <StoreProvider>
             <html lang="en">

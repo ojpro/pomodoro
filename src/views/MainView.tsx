@@ -2,16 +2,19 @@
 
 import CountdownTimer from "@/components/CountdownTimer";
 import SessionTabs from "@/components/SessionTabs";
+import { useAppDispatch, useAppSelector } from "@/hooks/states";
 import { toggleFullScreen } from "@/lib/utils";
+import { setIsPreferencesModalOpen } from "@/states/settings";
 import { Button } from "@nextui-org/button";
 import { NextUIProvider } from "@nextui-org/system";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Bolt, Fullscreen } from 'lucide-react';
-import { useState } from "react";
 import PreferencesView from "./PreferencesView";
 
 export default function MainView() {
-    const [isPreferencesModalOpen, setIsPreferencesModalOpen] = useState(false);
+
+    const dispatch = useAppDispatch();
+    const isPreferencesModalOpen = useAppSelector(state => state.settings.isPreferencesModalOpen);
 
     return (<>
         <NextUIProvider>
@@ -40,18 +43,15 @@ export default function MainView() {
 
                         {/* Open Preferences Modal */}
                         <Tooltip content='Open Preferences' delay={500}>
-                            <Button isIconOnly onClick={() => setIsPreferencesModalOpen(!isPreferencesModalOpen)}>
+                            <Button isIconOnly onClick={() => dispatch(setIsPreferencesModalOpen(!isPreferencesModalOpen))}>
                                 <Bolt />
                             </Button>
                         </Tooltip>
                     </div>
                 </footer>
 
-                {/* Components */}
-
                 {/* Preferences */}
-                <PreferencesView isOpen={isPreferencesModalOpen} handleChange={setIsPreferencesModalOpen} />
-
+                <PreferencesView></PreferencesView>
             </main>
         </NextUIProvider>
     </>);

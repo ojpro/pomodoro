@@ -70,7 +70,7 @@ export const settingConfigs = [
                 options: [
                     {
                         name: 'notifications',
-                        value: false,
+                        value: true,
                     }
                 ]
             },
