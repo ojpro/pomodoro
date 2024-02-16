@@ -32,7 +32,7 @@ export default function PreferencesView() {
     return <>
         {/* Preferences Modal */}
         <Sheet open={isPreferencesModalOpen} onOpenChange={(value) => dispatch(setIsPreferencesModalOpen(value))}>
-            <SheetContent className="lg:max-w-2xl rounded-l dark:bg-zinc-900 border-l-zinc-800" role="dialog">
+            <SheetContent className="min-w-full sm:min-w-[80vw] md:min-w-[70vw] lg:min-w-[60vw] xl:min-w-[50vw] 2xl:min-w-[30vw] rounded-l dark:bg-zinc-900 border-l-zinc-800" role="dialog">
                 <SheetHeader>
                     <SheetTitle>Preferences</SheetTitle>
                 </SheetHeader>
@@ -60,7 +60,7 @@ export default function PreferencesView() {
                     <Divider orientation="vertical" className="mx-4" />
 
                     {/* Settings Section */}
-                    <div className="flex flex-col flex-grow ml-8">
+                    <div className="flex flex-col flex-grow">
                         <span className="text-2xl font-semibold mb-4">{selectedCategory.name}</span>
                         {/* Category Settings */}
                         <ul>

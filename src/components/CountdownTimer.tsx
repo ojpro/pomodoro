@@ -104,7 +104,7 @@ export default function CountdownTimer() {
                 renderer={(props) => (
                     <Button color="default" variant="light"
                         onClick={() => toggleTimer()}
-                        className='text-white dark:text-gray-300 w-fit h-fit font-bold text-9xl text-[10rem] absolute top-1/2 -translate-y-1/2 -translate-x-1/2'>
+                        className='text-white dark:text-gray-300 w-fit h-fit font-bold text-9xl md:text-[10rem]  absolute top-1/2 -translate-y-1/2 -translate-x-1/2'>
                         {zeroPad(props.minutes)} : {zeroPad(props.seconds)}
                     </Button>)}
             />
