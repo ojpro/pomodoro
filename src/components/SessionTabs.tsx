@@ -19,14 +19,14 @@ export default function SessionTabs() {
     // watchers
     useEffect(() => {
         playSwitchSound();
-    }, [playSwitchSound, timerSession]);
+    }, [timerSession.name]);
 
     return (
         <div className="flex flex-wrap gap-4 py-6">
             <Tabs radius='md' aria-label="Switch Sessions" className='mx-auto'
-                  onSelectionChange={(key) => handleSessionChange(key)} selectedKey={timerSession.name}>
+                onSelectionChange={(key) => handleSessionChange(key)} selectedKey={timerSession.name}>
                 {Object.keys(SessionHelper.getAllTypes()).map((key) => (
-                    <Tab key={key} title={SessionHelper.getAllTypes()[key].name}/>
+                    <Tab key={key} title={SessionHelper.getAllTypes()[key].name} />
                 ))}
             </Tabs>
         </div>

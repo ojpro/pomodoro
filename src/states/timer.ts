@@ -6,7 +6,7 @@ export interface TimerState {
     value: {
         name: string,
         cycleNumber: number,
-        timeRemaining: number,
+        timeRemaining: number | null,
         isStarted: boolean,
         finishedPomodoro: number,
     }
@@ -18,7 +18,7 @@ const initialState: TimerState = {
     value: {
         name: 'pomodoro',
         cycleNumber: 0,
-        timeRemaining: 0,
+        timeRemaining: null,
         isStarted: false,
         finishedPomodoro: 0,
     }
@@ -36,7 +36,7 @@ export const timerSlice = createSlice({
 
         increaseCycleNumber: state => {
             if (state.value.cycleNumber < 4) {
-                if(state.value.name === SessionHelper.POMODORO){
+                if (state.value.name === SessionHelper.POMODORO) {
                     state.value.cycleNumber += 1;
                 }
             } else {
@@ -52,6 +52,7 @@ export const timerSlice = createSlice({
                     state.value.name = SessionHelper.SHORT_BREAK;
                 } else {
                     state.value.name = SessionHelper.LONG_BREAK;
+                    state.value.cycleNumber = 0;
                 }
             } else {
                 state.value.name = SessionHelper.POMODORO;
@@ -60,6 +61,6 @@ export const timerSlice = createSlice({
     }
 })
 
-export const {changeTimerSession, increaseCycleNumber, switchToNextSession} = timerSlice.actions
+export const { changeTimerSession, increaseCycleNumber, switchToNextSession } = timerSlice.actions
 
 export default timerSlice.reducer

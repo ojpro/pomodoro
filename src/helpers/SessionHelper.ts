@@ -36,7 +36,7 @@ export default class SessionHelper {
     }
 
     static getDuration(type: string): number {
-        return this.sessionTypes[type].duration * 60 * 1000;
+        return Date.now() + this.sessionTypes[type].duration * 60 * 1000;
     }
 
     static getNotificationInfo(type: string): { title: string, description: string } {
