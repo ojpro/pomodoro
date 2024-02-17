@@ -1,7 +1,7 @@
 import SessionHelper from "@/helpers/SessionHelper";
 import useNotification from "@/hooks/notification";
 import { useAppDispatch, useAppSelector } from '@/hooks/states';
-import { getSettingsByIds } from "@/lib/utils";
+import { getSettingsByNames } from "@/lib/utils";
 import { increaseCycleNumber, switchToNextSession } from "@/states/timer";
 import { SettingsChild, SettingsState } from "@/types/settings";
 import { Button } from "@nextui-org/button";
@@ -30,14 +30,18 @@ export default function CountdownTimer() {
     const stopClockTicking = useCallback(() => stop(), [stop]);
 
     const startTimer = () => {
-        playClockTicking();
+        const clockTickingSound: SettingsChild | undefined = getSettingsByNames(settings, 'Sounds', 'Clock Ticking Sound');
+
+        if (clockTickingSound?.options[0].value == true) {
+            playClockTicking();
+        }
         countdownApi?.start();
     }
 
-    const stopTimer = () => {
+    const stopTimer = useCallback(() => {
         stopClockTicking();
         countdownApi?.pause();
-    }
+    },[countdownApi, stopClockTicking])
 
     const toggleTimer = () => {
         if (isTimerPaused()) {
@@ -62,7 +66,7 @@ export default function CountdownTimer() {
         const notificationDetails = SessionHelper.getNotificationInfo(timerSession.name);
 
         // change notification details
-        const notificationSettings: SettingsChild | undefined = getSettingsByIds(settings, 'General', 'Notifications');
+        const notificationSettings: SettingsChild | undefined = getSettingsByNames(settings, 'General', 'Notifications');
 
         // show notification only when they are enabled
         if (notificationSettings?.options[0].value == true) {
@@ -71,7 +75,7 @@ export default function CountdownTimer() {
                 body: notificationDetails.description
             });
         }
-    }, [settings, timerSession.name]);
+    }, [settings, showNotification, timerSession.name]);
 
 
     // watcher
@@ -81,7 +85,7 @@ export default function CountdownTimer() {
 
         // Pause the timer when the sessionType changes
         stopTimer();
-    }, [timerSession.name]);
+    }, [stopTimer, timerSession.name]);
 
     useEffect(() => {
         if (isCompleted) {
@@ -91,7 +95,7 @@ export default function CountdownTimer() {
             // no need for it now ^_^
             setIsCompleted(false);
         }
-    }, [isCompleted])
+    }, [handleNotification, isCompleted])
 
 
     return (

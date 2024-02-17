@@ -28,6 +28,7 @@ export interface CategoryChildUI {
     default?: boolean,
     description: string,
     hideName?: boolean,
+    available?: boolean,
     options?: CategoryChildOptionUI[],
 }
 export interface CategoryUI {

@@ -13,10 +13,11 @@ import {
 } from "@/components/ui/sheet";
 import { settingsPresentation } from "@/db/settings";
 import { useAppDispatch, useAppSelector } from "@/hooks/states";
-import { getSettingsByIds } from "@/lib/utils";
+import { getSettingsByNames } from "@/lib/utils";
 import { setIsPreferencesModalOpen, updateSetting } from "@/states/settings";
 import { CategoryUI } from "@/types/settings";
 import { Button } from "@nextui-org/button";
+import { Chip } from "@nextui-org/chip";
 import { Divider } from "@nextui-org/divider";
 import { Switch } from "@nextui-org/switch";
 import { useState } from 'react';
@@ -43,7 +44,6 @@ export default function PreferencesView() {
                         {/* Side Navigation Categories */}
                         <nav className="flex flex-col gap-2">
                             {categories.map(category => (
-
                                 <Button
                                     key={category.id}
                                     variant={selectedCategory.id == category.id ? 'solid' : 'light'}
@@ -63,24 +63,16 @@ export default function PreferencesView() {
                     <div className="flex flex-col flex-grow">
                         <span className="text-2xl font-semibold mb-4">{selectedCategory.name}</span>
                         {/* Category Settings */}
-                        <ul>
+                        <ul className="space-y-1">
                             {selectedCategory.children?.map(child => {
-                                const currentSetting = getSettingsByIds(settings, selectedCategory.name, child.name);
+                                const currentSetting = getSettingsByNames(settings, selectedCategory.name, child.name);
                                 return (
                                     <li key={currentSetting?.id} className="py-2">
-                                        <label className="flex items-center">
+                                        <label className={`flex items-center ${!child.available ? 'text-gray-400' : ''}`}>
                                             {!child.hideName && child.name}
-                                            {child.type == 'switch' && (
-                                                <Switch className="ml-auto" defaultSelected={child.default} isSelected={currentSetting?.options[0].value as boolean} onValueChange={(value) => dispatch(updateSetting({
-                                                    settingId: selectedCategory.id,
-                                                    childId: child.id,
-                                                    optionName: currentSetting?.options[0].name ?? child.name.toLocaleLowerCase(),
-                                                    value,
-                                                }))} />
-                                            )}
 
                                             {child.type == 'select' && (
-                                                <Select defaultValue="random">
+                                                <Select defaultValue="random" disabled={!child.available}>
                                                     <SelectTrigger className="w-2/3 shadow dark:bg-zinc-800">
                                                         <SelectValue placeholder="Background" />
                                                     </SelectTrigger>
@@ -90,6 +82,21 @@ export default function PreferencesView() {
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
+                                            )}
+
+                                            {!child.available && (
+                                                <div>
+                                                    <Chip size="sm" variant="flat" color="warning" className="mx-2">soon</Chip>
+                                                </div>
+                                            )}
+
+                                            {child.type == 'switch' && (
+                                                <Switch isDisabled={!child.available} className="ml-auto" defaultSelected={child.default} isSelected={currentSetting?.options[0].value as boolean} onValueChange={(value) => dispatch(updateSetting({
+                                                    settingId: selectedCategory.id,
+                                                    childId: child.id,
+                                                    optionName: currentSetting?.options[0].name ?? child.name.toLocaleLowerCase(),
+                                                    value,
+                                                }))} />
                                             )}
                                         </label>
                                     </li>
