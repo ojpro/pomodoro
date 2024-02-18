@@ -18,7 +18,7 @@ export default function MainView() {
 
     return (<>
         <NextUIProvider>
-            <main className="w-full min-h-screen bg-[url(/images/bg-nature-6.jpg)] bg-no-repeat bg-cover bg-gray-200 relative">
+            <main className="min-w-[100svw] overflow-x-hidden min-h-svh bg-[url(/images/bg-nature-6.jpg)] bg-no-repeat bg-cover bg-gray-200 relative">
 
                 <header className='relative'>
                     {/* Sessions Switcher */}
