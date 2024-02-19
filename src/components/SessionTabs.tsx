@@ -21,7 +21,7 @@ export default function SessionTabs() {
 
     // watchers
     useEffect(() => {
-        const changingSessionSound: SettingsChild | undefined = getSettingsByNames(settings, 'Sounds', 'Session Changing Sound');
+        const changingSessionSound: SettingsChild | undefined = getSettingsByNames(settings, 'Sounds', 'Click Sound');
 
         if (changingSessionSound?.options[0].value == true) {
             playSwitchSound();

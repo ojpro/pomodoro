@@ -33,8 +33,8 @@ export default function PreferencesView() {
     return <>
         {/* Preferences Modal */}
         <Sheet open={isPreferencesModalOpen} onOpenChange={(value) => dispatch(setIsPreferencesModalOpen(value))}>
-            <SheetContent className="min-w-full sm:min-w-[80vw] md:min-w-[70vw] lg:min-w-[60vw] xl:min-w-[50vw] 2xl:min-w-[30vw] rounded-l dark:bg-zinc-900 border-l-zinc-800" role="dialog">
-                <SheetHeader>
+            <SheetContent className="min-w-full sm:min-w-[80vw] md:min-w-[70vw] lg:min-w-[60vw] xl:min-w-[50vw] 2xl:min-w-[30vw] rounded-l dark:bg-zinc-900 border-l-zinc-800 px-2 py-2" role="dialog">
+                <SheetHeader className="mb-4">
                     <SheetTitle>Preferences</SheetTitle>
                 </SheetHeader>
                 <div className="flex h-screen my-2">
@@ -48,7 +48,7 @@ export default function PreferencesView() {
                                     key={category.id}
                                     variant={selectedCategory.id == category.id ? 'solid' : 'light'}
                                     onClick={() => setSelectedCategory(category)}
-                                    className={`flex flex-row justify-start align-middle gap-3 px-6 py-2 rounded-lg`}
+                                    className={`flex flex-row justify-start align-middle gap-3 px-2 md:px-6 py-2 rounded-lg`}
                                 >
                                     <category.icon />
                                     <span>{category.name}</span>
@@ -57,7 +57,7 @@ export default function PreferencesView() {
                         </nav>
                     </div>
 
-                    <Divider orientation="vertical" className="mx-4" />
+                    <Divider orientation="vertical" className="mx-2" />
 
                     {/* Settings Section */}
                     <div className="flex flex-col flex-grow">

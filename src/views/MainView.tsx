@@ -20,7 +20,7 @@ export default function MainView() {
 
     return (<>
         <NextUIProvider>
-            <main className="min-w-[100svw] overflow-x-hidden min-h-svh bg-[url(/images/backgrounds/bg-nature-6.jpg)] bg-no-repeat bg-cover bg-black relative">
+            <main className="min-w-[100svw] overflow-x-hidden min-h-svh bg-[url(/images/backgrounds/bg-nature-6.jpg)] bg-no-repeat bg-center bg-cover bg-black relative">
 
                 <header className='relative'>
                     {/* Sessions Switcher */}
@@ -33,7 +33,7 @@ export default function MainView() {
                 </div>
 
                 {/*  Footer | Settings */}
-                <footer className="absolute inset-x-0 bottom-0 py-4 px-12 flex flex-row justify-start items-center">
+                <footer className="absolute inset-x-0 bottom-0 py-4 px-2 md:px-12 flex flex-row justify-start items-center gap-8">
                     <Link href="https://discord.gg/NdxHRGpUV7">
                         <Image src='/images/join-discord.png' width={180} height={60} alt="Join our Discord Server" />
                     </Link>

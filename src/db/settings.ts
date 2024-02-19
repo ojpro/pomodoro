@@ -32,7 +32,7 @@ export const settingsPresentation: CategoryUI[] = [
         children: [
             {
                 id: 1,
-                name: 'Session Changing Sound',
+                name: 'Click Sound',
                 type: 'switch',
                 default: true,
                 available: true,
@@ -113,10 +113,10 @@ export const settingConfigs = [
         children: [
             {
                 id: 1,
-                name: 'Session Changing Sound',
+                name: 'Click Sound',
                 options: [
                     {
-                        name: 'session-changing-sound',
+                        name: 'click-sound',
                         value: true,
                     }
                 ]
