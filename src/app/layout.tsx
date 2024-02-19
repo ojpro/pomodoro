@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import React from "react";
 
 import StoreProvider from "@/helpers/StoreProvider";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,6 +15,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StoreProvider>
             <html lang="en">
                 <head>
+                    {/* <!-- Google tag (gtag.js) --> */}
+
+                    <Script id='google-analytics-import-script' strategy="lazyOnload"
+                        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`} />
+
+                    <Script id='google-analytics-script-execution' strategy="lazyOnload">
+                        {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+                     `}
+                    </Script>
+
                     <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png" />
                     <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png" />
                     <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png" />
