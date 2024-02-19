@@ -9,6 +9,8 @@ import { Button } from "@nextui-org/button";
 import { NextUIProvider } from "@nextui-org/system";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Bolt, Fullscreen } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import PreferencesView from "./PreferencesView";
 
 export default function MainView() {
@@ -18,7 +20,7 @@ export default function MainView() {
 
     return (<>
         <NextUIProvider>
-            <main className="min-w-[100svw] overflow-x-hidden min-h-svh bg-[url(/images/bg-nature-6.jpg)] bg-no-repeat bg-cover bg-gray-200 relative">
+            <main className="min-w-[100svw] overflow-x-hidden min-h-svh bg-[url(/images/backgrounds/bg-nature-6.jpg)] bg-no-repeat bg-cover bg-black relative">
 
                 <header className='relative'>
                     {/* Sessions Switcher */}
@@ -31,9 +33,12 @@ export default function MainView() {
                 </div>
 
                 {/*  Footer | Settings */}
-                <footer className="absolute inset-x-0 bottom-0 py-4 px-12 flex flex-row justify-start align-middle">
+                <footer className="absolute inset-x-0 bottom-0 py-4 px-12 flex flex-row justify-start items-center">
+                    <Link href="https://discord.gg/NdxHRGpUV7">
+                        <Image src='/images/join-discord.png' width={180} height={60} alt="Join our Discord Server" />
+                    </Link>
                     {/* Action Buttons */}
-                    <div className="ml-auto flex flex-row justify-center align-middle gap-4">
+                    <div className="ml-auto flex flex-row justify-center items-center gap-4">
                         {/* Toggle Fullscreen */}
                         <Tooltip content='Toggle Fullscreen' delay={500}>
                             <Button isIconOnly onClick={toggleFullScreen}>
