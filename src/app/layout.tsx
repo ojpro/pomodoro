@@ -18,6 +18,22 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png" />
                     <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png" />
                     <link rel="manifest" href="/site.webmanifest" />
+
+                    {/* Facebook Meta Tags */}
+                    <meta property="og:url" content="https://pomodoropulse.com/" />
+                    <meta property="og:type" content="website" />
+                    <meta property="og:title" content="Pomodoro Pulse: Maximize Your Productivity" />
+                    <meta property="og:description" content="Designed for Pomodoro enthusiasts aiming for maximum productivity." />
+                    <meta property="og:image" content="/images/ogimage.png" />
+
+                    {/* Twitter Meta Tags  */}
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta property="twitter:domain" content="pomodoropulse.com" />
+                    <meta property="twitter:url" content="https://pomodoropulse.com/" />
+                    <meta name="twitter:title" content="Pomodoro Pulse: Maximize Your Productivity" />
+                    <meta name="twitter:description" content="Designed for Pomodoro enthusiasts aiming for maximum productivity." />
+                    <meta name="twitter:image" content="/images/ogimage.png" />
+
                 </head>
                 <body>
                     {children}
