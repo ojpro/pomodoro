@@ -1,5 +1,7 @@
-# Pomodoro App
+# Pomodoro Pulse
+Designed for Pomodoro enthusiasts aiming for maximum productivity.
 
 
 # ScreenShot
-![image](https://github.com/ojpro/pomodoro/assets/108437129/3f0c660b-eddd-41c7-bd7b-993d9aad1889)
+![image](https://github.com/ojpro/pomodoro-pulse/assets/108437129/34b4af23-5e9a-43ef-ac89-c47fb8c56a42)
+
