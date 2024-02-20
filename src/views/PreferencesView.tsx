@@ -119,7 +119,7 @@ export default function PreferencesView() {
                                                 {child.type == 'input' && parentSetting && (
                                                     <div className="flex flex-row gap-2 flex-wrap lg:flex-nowrap">
                                                         {child.options && child.options.map(input => {
-                                                            const option: string = (parentSetting.options[0].value as any)[input.name] as string;
+                                                            const option: string = (parentSetting?.options[0].value as any)[input.name] as string;
                                                             return (
                                                                 <Input
                                                                     isDisabled={!child.available}
