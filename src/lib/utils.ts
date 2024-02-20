@@ -14,7 +14,7 @@ export function toggleFullScreen(): void {
     }
 }
 
-export const getSettingsByNames = (settings: any, categoryName: string, childName: string): SettingsChild | undefined => {
+export const getSettingsByNames = (settings:any, categoryName: string, childName: string): SettingsChild | undefined => {
     return settings
         .find((category: SettingsChild) => category.name === categoryName)
         ?.children

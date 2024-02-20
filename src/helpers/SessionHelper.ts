@@ -1,9 +1,5 @@
-interface SessionType {
-    name: string;
-    duration: number;
-    title: string;
-    description: string;
-}
+import { getSettingsByNames } from "@/lib/utils";
+import { SessionType, SettingsChild } from "@/types/settings";
 
 export default class SessionHelper {
     static readonly POMODORO = 'pomodoro';
@@ -35,8 +31,11 @@ export default class SessionHelper {
         return this.sessionTypes;
     }
 
-    static getDuration(type: string): number {
-        return Date.now() + this.sessionTypes[type].duration * 60 * 1000;
+    static getDuration(settings: any, type: string): number {
+        const durationSettings: SettingsChild | undefined = getSettingsByNames(settings, 'Timer', 'Custom Sessions Duration');
+        const duration = durationSettings?.options[0].value[type];
+
+        return Date.now() + duration * 60 * 1000;
     }
 
     static getNotificationInfo(type: string): { title: string, description: string } {

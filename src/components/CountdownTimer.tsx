@@ -16,7 +16,7 @@ export default function CountdownTimer() {
     const settings = useAppSelector<SettingsState[]>(state => state.settings.value);
     const dispatch = useAppDispatch();
     const { showNotification } = useNotification();
-    const [sessionDuration, setSessionDuration] = useState<number>(timerSession.timeRemaining || SessionHelper.getDuration(timerSession.name));
+    const [sessionDuration, setSessionDuration] = useState<number>(timerSession.timeRemaining || SessionHelper.getDuration(settings, timerSession.name));
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
     const [countdownApi, setCountdownApi] = useState<CountdownApi | null>(null);
     const [playClockTicking, { stop }] = useSound('/sounds/clock_ticking.mp3', {
@@ -41,7 +41,7 @@ export default function CountdownTimer() {
     const stopTimer = useCallback(() => {
         stopClockTicking();
         countdownApi?.pause();
-    },[countdownApi, stopClockTicking])
+    }, [countdownApi, stopClockTicking])
 
     const toggleTimer = () => {
         if (isTimerPaused()) {
@@ -81,11 +81,11 @@ export default function CountdownTimer() {
     // watcher
     useEffect(() => {
         // set the new session duration
-        setSessionDuration(SessionHelper.getDuration(timerSession.name));
+        setSessionDuration(SessionHelper.getDuration(settings, timerSession.name));
 
         // Pause the timer when the sessionType changes
         stopTimer();
-    }, [stopTimer, timerSession.name]);
+    }, [stopTimer, settings, timerSession.name]);
 
     useEffect(() => {
         if (isCompleted) {
@@ -105,11 +105,12 @@ export default function CountdownTimer() {
                 autoStart={false}
                 ref={setCountdownApi}
                 onComplete={handleCompletion}
-                renderer={(props: { minutes: any; seconds: any; }) => (
+                daysInHours={true}
+                renderer={(props: { hours: number, minutes: number, seconds: number }) => (
                     <Button color="default" variant="light"
                         onClick={() => toggleTimer()}
                         className='text-white w-fit h-fit font-bold text-8xl md:text-[10rem]  absolute top-1/2 -translate-y-1/2 -translate-x-1/2'>
-                        {zeroPad(props.minutes)} : {zeroPad(props.seconds)}
+                        {props.hours > 0 && zeroPad(props.hours) + ' : '} {zeroPad(props.minutes)} : {zeroPad(props.seconds)}
                     </Button>)}
             />
 

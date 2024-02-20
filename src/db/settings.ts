@@ -1,5 +1,5 @@
 import { CategoryUI } from "@/types/settings";
-import { Home, Image, Volume2 } from "lucide-react";
+import { AlarmClock, Home, Image, Volume2 } from "lucide-react";
 
 export const settingsPresentation: CategoryUI[] = [
     {
@@ -27,6 +27,81 @@ export const settingsPresentation: CategoryUI[] = [
     },
     {
         id: 2,
+        name: 'Timer',
+        icon: AlarmClock,
+        children: [
+            {
+                id: 1,
+                name: 'Custom Sessions Duration',
+                type: 'select',
+                available: true,
+                default: 'popular',
+                description: 'Change the default sessions duration',
+                options: [
+                    {
+                        name: 'popular',
+                        label: 'Popular',
+                        value: {
+                            'pomodoro': 25,
+                            'short-break': 5,
+                            'long-break': 15,
+                        },
+                    },
+                    {
+                        name: 'extanded',
+                        label: 'Extanded',
+                        value: {
+                            'pomodoro': 45,
+                            'short-break': 10,
+                            'long-break': 20,
+                        },
+                    },
+                    {
+                        name: 'deep-work',
+                        label: 'Deep Work',
+                        value: {
+                            'pomodoro': 60,
+                            'short-break': 15,
+                            'long-break': 30,
+                        },
+                    },
+                    {
+                        name: 'custom',
+                        label: 'Custom',
+                        value: {
+                            'pomodoro': 25,
+                            'short-break': 5,
+                            'long-break': 15,
+                        },
+                    },
+                ]
+            },
+            {
+                id: 2,
+                name: 'Adjust Durations',
+                type: 'input',
+                available: false,
+                link: 'Custom Sessions Duration',
+                description: 'Adjust the durations',
+                options: [
+                    {
+                        name: 'pomodoro',
+                        label: 'Pomodoro',
+                    },
+                    {
+                        name: 'short-break',
+                        label: 'Short Break',
+                    },
+                    {
+                        name: 'long-break',
+                        label: 'Long Break',
+                    },
+                ]
+            }
+        ]
+    },
+    {
+        id: 3,
         name: 'Sounds',
         icon: Volume2,
         children: [
@@ -49,7 +124,7 @@ export const settingsPresentation: CategoryUI[] = [
         ]
     },
     {
-        id: 3,
+        id: 4,
         name: 'Backgrounds',
         icon: Image,
         children: [
@@ -57,6 +132,7 @@ export const settingsPresentation: CategoryUI[] = [
                 id: 1,
                 name: 'Background',
                 type: 'select',
+                default: 'random',
                 available: false,
                 description: 'Randomly switch between background images',
                 hideName: true,
@@ -109,6 +185,26 @@ export const settingConfigs = [
     },
     {
         id: 2,
+        name: 'Timer',
+        children: [
+            {
+                id: 1,
+                name: 'Custom Sessions Duration',
+                options: [
+                    {
+                        name: 'popular',
+                        value: {
+                            'pomodoro': 25,
+                            'short-break': 5,
+                            'long-break': 15,
+                        },
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        id: 3,
         name: 'Sounds',
         children: [
             {
@@ -134,7 +230,7 @@ export const settingConfigs = [
         ]
     },
     {
-        id: 3,
+        id: 4,
         name: 'Backgrounds',
         children: [
             {
